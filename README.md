@@ -4,3 +4,5 @@ Cloud9 settings used in Ruby on Rails チュートリアル スクリーンキ�
 https://railstutorial.jp/#screencast
 
 Railsチュートリアルのスクリーンキャストで使っている設定ファイルです。
+
+![スクリーンショット](https://raw.githubusercontent.com/yasulab/cloud9_bashrc/master/cloud9_settings.png)
