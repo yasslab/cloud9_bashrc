@@ -1,12 +1,11 @@
 # Cloud9 settings in .bashrc
 
-[Railsチュートリアルの解説動画](https://railstutorial.jp/#screencast)で使っている設定ファイルです。
+[Railsチュートリアルの解説動画](https://railstutorial.jp/#screencast)で使っている Cloud9 の設定ファイルです。
 
-![スクリーンショット](https://raw.githubusercontent.com/yasulab/cloud9_bashrc/master/cloud9_settings.png)
+[![スクリーンショット](https://raw.githubusercontent.com/yasulab/cloud9_bashrc/master/cloud9_settings.png)](https://github.com/yasslab/cloud9_bashrc/blob/master/.bashrc)
 
-Cloud9 settings used in in Ruby on Rails チュートリアル 解説動画   
-https://railstutorial.jp/#screencast
-
+設定ファイル詳細 (.bashrc)   
+https://github.com/yasslab/cloud9_bashrc/blob/master/.bashrc
 
 ## ライセンス
 
