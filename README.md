@@ -9,3 +9,10 @@ https://railstutorial.jp/#screencast
 
 [![スクリーンキャスト](https://raw.githubusercontent.com/yasulab/cloud9_bashrc/master/screencast.png)](https://railstutorial.jp/#screencast
 )
+
+
+## ライセンス
+
+Copyright (C) 2017 [YassLab](https://yasslab.jp/)
+
+MIT ライセンス
