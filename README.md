@@ -7,7 +7,7 @@ Railsチュートリアルのスクリーンキャストで使っている設定
 Cloud9 settings used in Ruby on Rails チュートリアル スクリーンキャスト   
 https://railstutorial.jp/#screencast
 
-[![スクリーンキャスト](https://raw.githubusercontent.com/yasulab/cloud9_bashrc/master/screencast.png)](https://railstutorial.jp/#screencast
+[![動画版チュートリアル](https://raw.githubusercontent.com/yasulab/cloud9_bashrc/master/screenshot.png)](https://railstutorial.jp/#screencast
 )
 
 
