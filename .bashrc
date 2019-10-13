@@ -1,63 +1,70 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
+# .bashrc
 
-. /etc/apache2/envvars
+export PATH=$PATH:$HOME/.local/bin:$HOME/bin
 
-# If not running interactively, don't do anything else
-[ -z "$PS1" ] && return
+# load nvm
+export NVM_DIR="$HOME/.nvm"
+[ "$BASH_VERSION" ] && npm() { 
+    # hack: avoid slow npm sanity check in nvm
+    if [ "$*" == "config get prefix" ]; then which node | sed "s/bin\/node//"; 
+    else $(which npm) "$@"; fi 
+}
+# [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+rvm_silence_path_mismatch_check_flag=1 # prevent rvm complaints that nvm is first in PATH
+unset npm # end hack
 
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
-HISTCONTROL=ignoreboth
 
-# append to the history file, don't overwrite it
-shopt -s histappend
+# User specific aliases and functions
+alias python=python3.6
 
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=3000
-HISTFILESIZE=2000
+# modifications needed only in interactive mode
+if [ "$PS1" != "" ]; then
+    # Set default editor for git
+    git config --global core.editor /usr/bin/nano
 
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-shopt -s checkwinsize
+    # Turn on checkwinsize
+    shopt -s checkwinsize
 
-# make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+    # keep more history
+    shopt -s histappend
+    export HISTSIZE=100000
+    export HISTFILESIZE=100000
+    export PROMPT_COMMAND="history -a;"
 
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+    # Source for Git PS1 function
+    git_type=$(type -t __git_ps1)
+    if [ -z $git_type ] && [ -e "/usr/share/git-core/contrib/completion/git-prompt.sh" ]; then
+        . /usr/share/git-core/contrib/completion/git-prompt.sh
+    fi
 
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
+    # Cloud9 default prompt
+    _cloud9_prompt_user() {
+        if [ "$C9_USER" = root ]; then
+            echo "$USER"
+        else
+            echo "$C9_USER"
+        fi
+    }
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
-    . /etc/bash_completion
-fi
+    git_branch() {
+        git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+    }
+    git_color() {
+        [[ -n $(git status --porcelain=v2 2>/dev/null) ]] && echo 31 || echo 33
+    }
 
-#PS1='\[\033[01;32m\]${C9_USER}\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(__git_ps1 " (%s)") $ '
-PS1="╭─○ \[\033[01;32m\]${C9_USER}\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(__git_ps1 " (%s)")
+    # PS1='\[\033[01;32m\]$(_cloud9_prompt_user)\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(__git_ps1 " (%s)" 2>/dev/null) $ '
+    #PS1="╭─○ \[\033[01;32m\]${C9_USER}\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(__git_ps1 " (%s)")╰─○ "
+    PS1="╭─○ \[\033[\$(git_color)m\]\$(git_branch)\[\033[00m\]\[\033[01;34m\]\w\[\033[00m\]$(__git_ps1 " (%s)")
 ╰─○ "
+fi
 
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
+[[ -s "$HOME/.rvm/environments/default" ]] && source "$HOME/.rvm/environments/default"
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
 
-export rvm_silence_path_mismatch_check_flag=1
-
-# Enable peco for Ctrl-r
-export PATH="$PATH:~/bin"
+# .bashrc settings from GitHub
+# https://github.com/yasslab/cloud9_bashrc
 
 peco-select-history() {
     declare l=$(HISTTIMEFORMAT= history | sort -k1,1nr | perl -ne 'BEGIN { my @lines = (); } s/^\s*\d+\s*//; $in=$_; if (!(grep {$in eq $_} @lines)) { push(@lines, $in); print $in; }' | peco --query "$READLINE_LINE")
