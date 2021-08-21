@@ -4,5 +4,5 @@ YassLab team is committed to fostering a welcoming community.
 
 **Our Code of Conduct can be found here**:
 
-English : https://yasslab.jp/en/coc/   
-Japanese: https://yasslab.jp/ja/coc/
+English : https://yasslab.jp/en/code-of-conduct  
+Japanese: https://yasslab.jp/ja/code-of-conduct
